@@ -20,6 +20,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <noscript>
+        <style>
+            [data-aos] {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        </style>
+    </noscript>
+
     <style>
         @font-face {
             font-family: 'Goodly';
@@ -62,7 +71,11 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        h1, h2, h3, h4, .font-heading {
+        h1,
+        h2,
+        .font-heading,
+        .section-title,
+        .display-heading {
             font-family: 'Goodly', Arial, Helvetica, sans-serif;
         }
 
@@ -70,10 +83,35 @@
             scroll-margin-top: 88px;
         }
 
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--cdc-orange);
+            outline-offset: 4px;
+            border-radius: 999px;
+        }
+
         .bg-graphite { background-color: var(--cdc-graphite); }
         .bg-stone { background-color: var(--cdc-stone); }
         .bg-pure-white { background-color: var(--cdc-white); }
         .text-graphite { color: var(--cdc-graphite); }
+
+        .site-nav {
+            transition: padding 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .site-nav.is-compact {
+            padding-top: 0.65rem;
+            padding-bottom: 0.65rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.14);
+        }
+
+        .site-nav.is-compact .brand-logo {
+            height: 2rem;
+        }
+
+        .site-nav.is-compact .logo-text-nav {
+            font-size: 26px;
+        }
 
         .btn-pill {
             border-radius: 999px;
@@ -112,10 +150,19 @@
             transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
         }
 
-        .card-b2b:hover {
+        .card-b2b:hover,
+        .card-b2b:focus-within {
             border-color: rgba(255,117,31,0.58);
             box-shadow: 0 18px 50px rgba(0,0,0,0.065);
             transform: translateY(-3px);
+        }
+
+        .card-b2b h3,
+        .metric-card h3,
+        .card-title {
+            font-family: 'Lato', Arial, Helvetica, sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
         .hero-parallax {
@@ -227,8 +274,13 @@
             transition: width 0.25s ease;
         }
 
-        .nav-link:hover::after {
+        .nav-link:hover::after,
+        .nav-link.is-active::after {
             width: 100%;
+        }
+
+        .nav-link.is-active {
+            color: #ffffff;
         }
 
         .metric-card {
@@ -334,6 +386,12 @@
             }
         }
 
+        @media (max-width: 360px) {
+            .logo-text-nav {
+                display: none;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             html {
                 scroll-behavior: auto;
@@ -359,6 +417,7 @@
     <div class="mobile-sticky-cta" id="mobileStickyCta">
         <a
             href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=mobile_sticky_cta"
+            data-outbound-cta="mobile_sticky_cta"
             target="_blank"
             rel="noopener noreferrer"
             class="btn-pill block w-full text-center px-6 py-4 text-xs font-bold tracking-[0.12em] uppercase"
@@ -367,30 +426,31 @@
         </a>
     </div>
 
-    <nav class="fixed w-full z-50 bg-graphite border-b border-white/10 py-4 transition-all" aria-label="Main navigation">
+    <nav id="siteNav" class="site-nav fixed w-full z-50 bg-graphite border-b border-white/10 py-4 transition-all" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
 
             <a href="#" class="flex items-center gap-4" aria-label="CDC Africa home">
                 <img
                     src="./Logo_CDC_new.png"
                     alt="CDC"
-                    class="h-8 md:h-10 w-auto object-contain shrink-0"
+                    class="brand-logo h-8 md:h-10 w-auto object-contain shrink-0 transition-all"
                     width="160"
                     height="48"
                 >
                 <div class="h-8 w-[1px] bg-white/30 hidden md:block"></div>
-                <span class="text-white logo-text logo-text-nav transform translate-y-[2px]">AFRICA</span>
+                <span class="text-white logo-text logo-text-nav transform translate-y-[2px] transition-all">AFRICA</span>
             </a>
 
             <div class="hidden lg:flex gap-8 items-center text-xs font-bold tracking-[0.1em] uppercase text-gray-300">
-                <a href="#about" class="nav-link hover:text-white transition-colors">About</a>
-                <a href="#why-africa" class="nav-link hover:text-white transition-colors">Why Africa</a>
-                <a href="#use-cases" class="nav-link hover:text-white transition-colors">Use Cases</a>
-                <a href="#extractive" class="nav-link hover:text-white transition-colors">Mining</a>
-                <a href="#ppp" class="nav-link hover:text-white transition-colors">PPP / ROI</a>
+                <a href="#about" class="nav-link hover:text-white transition-colors" data-section-link="about">About</a>
+                <a href="#why-africa" class="nav-link hover:text-white transition-colors" data-section-link="why-africa">Why Africa</a>
+                <a href="#use-cases" class="nav-link hover:text-white transition-colors" data-section-link="use-cases">Use Cases</a>
+                <a href="#extractive" class="nav-link hover:text-white transition-colors" data-section-link="extractive">Mining</a>
+                <a href="#ppp" class="nav-link hover:text-white transition-colors" data-section-link="ppp">PPP / ROI</a>
 
                 <a
                     href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=nav_cta"
+                    data-outbound-cta="nav_cta"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="px-6 py-2.5 border border-white/20 text-white rounded-[30px] hover:border-[#ff751f] hover:bg-[#ff751f] transition-all flex items-center gap-2"
@@ -422,6 +482,7 @@
                 <a href="#ppp" class="hover:text-white transition-colors">PPP / ROI</a>
                 <a
                     href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=mobile_menu_cta"
+                    data-outbound-cta="mobile_menu_cta"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn-pill text-center px-6 py-3 mt-2"
@@ -460,6 +521,7 @@
                 <div class="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
                     <a
                         href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=hero_primary_cta"
+                        data-outbound-cta="hero_primary_cta"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn-pill w-full sm:w-auto px-10 py-4 font-bold tracking-[0.1em] uppercase text-xs text-center"
@@ -480,35 +542,35 @@
         <section class="bg-graphite border-y border-white/10">
             <div class="max-w-7xl mx-auto px-6 md:px-12 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 <div>
-                    <div class="text-white font-heading text-2xl md:text-3xl">Kigali</div>
+                    <div class="text-white font-heading text-2xl md:text-3xl">Kigali-Based</div>
                     <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Regional Hub</div>
                 </div>
 
                 <div>
-                    <div class="text-white font-heading text-2xl md:text-3xl">CDC</div>
-                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Global Engineering</div>
+                    <div class="text-white font-heading text-2xl md:text-3xl">Global CDC</div>
+                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Engineering Access</div>
                 </div>
 
                 <div>
-                    <div class="text-white font-heading text-2xl md:text-3xl">PPP</div>
-                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Bankable Models</div>
+                    <div class="text-white font-heading text-2xl md:text-3xl">PPP-Ready</div>
+                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Infrastructure Logic</div>
                 </div>
 
                 <div>
-                    <div class="text-white font-heading text-2xl md:text-3xl">Africa</div>
-                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Urban • Tourism • Mining</div>
+                    <div class="text-white font-heading text-2xl md:text-3xl">4 Sectors</div>
+                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Urban • Tourism • Remote • Mining</div>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="py-16 md:py-20 bg-pure-white border-b border-gray-200">
+        <section id="about" class="py-14 md:py-18 bg-pure-white border-b border-gray-200">
             <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                 <div data-aos="fade-right">
                     <span class="text-[#ff751f] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
                         CDC Africa
                     </span>
 
-                    <h2 class="text-4xl md:text-5xl font-light text-graphite mb-6 font-heading">
+                    <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-6">
                         The African hub for CDC’s global ropeway engineering.
                     </h2>
 
@@ -522,6 +584,7 @@
 
                     <a
                         href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=about_text_cta"
+                        data-outbound-cta="about_text_cta"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="text-link-arrow"
@@ -530,12 +593,12 @@
                     </a>
                 </div>
 
-                <div class="card-b2b p-7 md:p-8" data-aos="fade-left">
-                    <h3 class="text-3xl md:text-4xl font-light text-graphite font-heading mb-6">
+                <div class="card-b2b p-6 md:p-7" data-aos="fade-left">
+                    <h3 class="text-2xl md:text-3xl font-light text-graphite font-heading mb-5">
                         One regional partner for high-value infrastructure opportunities.
                     </h3>
 
-                    <ul class="space-y-3 text-gray-700 font-light">
+                    <ul class="space-y-2.5 text-gray-700 font-light text-sm md:text-base">
                         <li class="flex items-start gap-3">
                             <span class="text-[#ff751f] font-bold">✓</span>
                             Local presence in Kigali, Rwanda
@@ -567,7 +630,7 @@
                         Why Africa
                     </span>
 
-                    <h2 class="text-4xl md:text-5xl font-light text-graphite font-heading mb-5">
+                    <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-5">
                         Africa’s growth requires new infrastructure models.
                     </h2>
 
@@ -578,28 +641,28 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up" data-aos-delay="100">
                     <article class="card-b2b p-6">
-                        <h3 class="text-2xl font-bold text-graphite mb-3 font-heading">Urban Pressure</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-3">Urban Pressure</h3>
                         <p class="text-gray-600 text-sm font-light leading-relaxed">
                             Fast-growing cities need mobility systems that can expand without massive road construction.
                         </p>
                     </article>
 
                     <article class="card-b2b p-6">
-                        <h3 class="text-2xl font-bold text-graphite mb-3 font-heading">Complex Terrain</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-3">Complex Terrain</h3>
                         <p class="text-gray-600 text-sm font-light leading-relaxed">
                             Hills, valleys, rivers and protected landscapes require infrastructure that adapts to geography.
                         </p>
                     </article>
 
                     <article class="card-b2b p-6">
-                        <h3 class="text-2xl font-bold text-graphite mb-3 font-heading">Limited Access</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-3">Limited Access</h3>
                         <p class="text-gray-600 text-sm font-light leading-relaxed">
                             Remote regions, tourism assets and industrial sites need reliable connections to unlock value.
                         </p>
                     </article>
 
                     <article class="card-b2b p-6">
-                        <h3 class="text-2xl font-bold text-graphite mb-3 font-heading">Economic Growth</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-3">Economic Growth</h3>
                         <p class="text-gray-600 text-sm font-light leading-relaxed">
                             Better mobility supports jobs, tourism, productivity, integration and investment attraction.
                         </p>
@@ -614,7 +677,7 @@
                     Find Your African Use Case
                 </span>
 
-                <h2 class="text-4xl md:text-5xl font-light text-graphite font-heading mb-5">
+                <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-5">
                     What are you planning?
                 </h2>
 
@@ -626,15 +689,15 @@
             <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
                 <article class="card-b2b flex flex-col" data-aos="fade-up" data-aos-delay="100">
-                    <div class="image-placeholder" role="img" aria-label="Urban cableway placeholder">
+                    <div class="image-placeholder" role="img" aria-label="Urban corridor ropeway system">
                         <div class="placeholder-label">
-                            Urban Cableway<br>Engineering Visual
+                            Urban Corridor<br>Ropeway System
                         </div>
                     </div>
 
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="text-[#ff751f] text-xs font-bold tracking-[0.18em] uppercase mb-3">Cities</div>
-                        <h3 class="text-2xl font-bold text-graphite mb-3 font-heading">Urban Cableways</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-3">Urban Cableways</h3>
 
                         <p class="text-gray-600 mb-5 font-light text-sm flex-grow">
                             For capitals and fast-growing cities facing congestion, limited road capacity and difficult land acquisition.
@@ -642,25 +705,26 @@
 
                         <a
                             href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=usecase_urban"
+                            data-outbound-cta="usecase_urban"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="text-link-arrow mt-auto"
                         >
-                            Explore global capabilities →
+                            Explore urban capabilities →
                         </a>
                     </div>
                 </article>
 
                 <article class="card-b2b flex flex-col" data-aos="fade-up" data-aos-delay="200">
-                    <div class="image-placeholder" role="img" aria-label="Tourism and mountain access placeholder">
+                    <div class="image-placeholder" role="img" aria-label="Mountain access low-impact route">
                         <div class="placeholder-label">
-                            Tourism Access<br>Engineering Visual
+                            Mountain Access<br>Low-Impact Route
                         </div>
                     </div>
 
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="text-[#ff751f] text-xs font-bold tracking-[0.18em] uppercase mb-3">Tourism</div>
-                        <h3 class="text-2xl font-bold text-graphite mb-3 font-heading">Mountain & Park Access</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-3">Mountain & Park Access</h3>
 
                         <p class="text-gray-600 mb-5 font-light text-sm flex-grow">
                             For iconic mountain destinations, national parks, resorts, islands and premium natural sites.
@@ -668,25 +732,26 @@
 
                         <a
                             href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=usecase_tourism"
+                            data-outbound-cta="usecase_tourism"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="text-link-arrow mt-auto"
                         >
-                            Explore global capabilities →
+                            Explore tourism capabilities →
                         </a>
                     </div>
                 </article>
 
                 <article class="card-b2b flex flex-col" data-aos="fade-up" data-aos-delay="300">
-                    <div class="image-placeholder" role="img" aria-label="Remote access placeholder">
+                    <div class="image-placeholder" role="img" aria-label="Remote link cable crossing">
                         <div class="placeholder-label">
-                            Remote Access<br>Engineering Visual
+                            Remote Link<br>Cable Crossing
                         </div>
                     </div>
 
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="text-[#ff751f] text-xs font-bold tracking-[0.18em] uppercase mb-3">Connectivity</div>
-                        <h3 class="text-2xl font-bold text-graphite mb-3 font-heading">Remote Regional Access</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-3">Remote Regional Access</h3>
 
                         <p class="text-gray-600 mb-5 font-light text-sm flex-grow">
                             For island regions, isolated communities, valleys, rivers and locations where roads are slow or costly to build.
@@ -694,25 +759,26 @@
 
                         <a
                             href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=usecase_remote"
+                            data-outbound-cta="usecase_remote"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="text-link-arrow mt-auto"
                         >
-                            Explore global capabilities →
+                            Explore remote access capabilities →
                         </a>
                     </div>
                 </article>
 
                 <article class="card-b2b flex flex-col" data-aos="fade-up" data-aos-delay="400">
-                    <div class="image-placeholder" role="img" aria-label="Mining logistics placeholder">
+                    <div class="image-placeholder" role="img" aria-label="Material transport mining system">
                         <div class="placeholder-label">
-                            Mining Logistics<br>Engineering Visual
+                            Material Transport<br>Mining System
                         </div>
                     </div>
 
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="text-[#ff751f] text-xs font-bold tracking-[0.18em] uppercase mb-3">Mining</div>
-                        <h3 class="text-2xl font-bold text-graphite mb-3 font-heading">Industrial Logistics</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-3">Industrial Logistics</h3>
 
                         <p class="text-gray-600 mb-5 font-light text-sm flex-grow">
                             For mining operators and industrial sites requiring heavy-load transport across difficult terrain.
@@ -720,11 +786,12 @@
 
                         <a
                             href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=usecase_mining"
+                            data-outbound-cta="usecase_mining"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="text-link-arrow mt-auto"
                         >
-                            Explore global capabilities →
+                            Explore mining capabilities →
                         </a>
                     </div>
                 </article>
@@ -739,29 +806,29 @@
                         Extractive Sector
                     </span>
 
-                    <h2 class="text-4xl md:text-6xl font-light text-white font-heading mb-5">
-                        Material Ropeways & Cable Cranes <br class="hidden md:block">
+                    <h2 class="section-title text-4xl md:text-6xl font-light text-white mb-5">
+                        Heavy-Load Infrastructure <br class="hidden md:block">
                         for Mining Operations.
                     </h2>
 
-                    <p class="text-gray-300 text-lg font-light leading-relaxed">
-                        Heavy-load ropeway systems can support mining and industrial operations where terrain, distance, weather or lack of roads creates costly logistical barriers.
+                    <p class="text-gray-300 text-lg font-light leading-relaxed max-w-3xl mx-auto">
+                        Material ropeways and cable cranes can support mining and industrial operations where terrain, distance, weather or lack of roads creates costly logistical barriers.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 text-center mb-10" data-aos="fade-up" data-aos-delay="100">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 text-center mb-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="metric-card p-5 md:p-6 rounded-[12px]">
                         <div class="text-4xl md:text-5xl text-white font-heading mb-2">40T+</div>
-                        <div class="text-[#ff751f] text-xs font-bold uppercase tracking-widest">Carrying Capacity</div>
+                        <div class="text-[#ff751f] text-xs font-bold uppercase tracking-widest">Capacity Potential</div>
                     </div>
 
                     <div class="metric-card p-5 md:p-6 rounded-[12px]">
-                        <div class="text-4xl md:text-5xl text-white font-heading mb-2">3 km</div>
-                        <div class="text-[#ff751f] text-xs font-bold uppercase tracking-widest">Span Between Supports</div>
+                        <div class="text-4xl md:text-5xl text-white font-heading mb-2">Up to 3 km</div>
+                        <div class="text-[#ff751f] text-xs font-bold uppercase tracking-widest">Span Potential</div>
                     </div>
 
                     <div class="metric-card p-5 md:p-6 rounded-[12px]">
-                        <div class="text-4xl md:text-5xl text-white font-heading mb-2">60°</div>
+                        <div class="text-4xl md:text-5xl text-white font-heading mb-2">Up to 60°</div>
                         <div class="text-[#ff751f] text-xs font-bold uppercase tracking-widest">Slope Operation</div>
                     </div>
 
@@ -771,23 +838,27 @@
                     </div>
                 </div>
 
+                <p class="text-gray-400 text-xs font-light text-center max-w-2xl mx-auto mb-10">
+                    Technical parameters depend on project configuration, terrain, system type and operational requirements.
+                </p>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left" data-aos="fade-up" data-aos-delay="200">
                     <article class="metric-card p-6 rounded-[12px]">
-                        <h3 class="text-2xl text-white font-heading mb-3">No Haul Roads</h3>
+                        <h3 class="card-title text-2xl text-white mb-3">No Haul Roads</h3>
                         <p class="text-gray-300 text-sm font-light leading-relaxed">
                             Bulk transport in a single pass with reduced dependence on road clearing and heavy ground infrastructure.
                         </p>
                     </article>
 
                     <article class="metric-card p-6 rounded-[12px]">
-                        <h3 class="text-2xl text-white font-heading mb-3">Fewer Towers</h3>
+                        <h3 class="card-title text-2xl text-white mb-3">Fewer Towers</h3>
                         <p class="text-gray-300 text-sm font-light leading-relaxed">
                             Long spans can reduce the number of supports, lowering terrain impact and simplifying access across difficult areas.
                         </p>
                     </article>
 
                     <article class="metric-card p-6 rounded-[12px]">
-                        <h3 class="text-2xl text-white font-heading mb-3">Modular & Relocatable</h3>
+                        <h3 class="card-title text-2xl text-white mb-3">Modular & Relocatable</h3>
                         <p class="text-gray-300 text-sm font-light leading-relaxed">
                             Systems can be adapted and relocated as mining operations evolve and extraction zones shift.
                         </p>
@@ -797,11 +868,12 @@
                 <div class="text-center mt-10">
                     <a
                         href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=mining_cta"
+                        data-outbound-cta="mining_cta"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn-pill inline-block px-10 py-4 font-bold tracking-[0.1em] uppercase text-xs"
                     >
-                        Explore CDC Global Capabilities
+                        Explore CDC Mining Capabilities
                     </a>
                 </div>
             </div>
@@ -815,7 +887,7 @@
                         Global Engineering Behind CDC Africa
                     </span>
 
-                    <h2 class="text-4xl md:text-5xl font-light text-graphite font-heading mb-5">
+                    <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-5">
                         Proven technology. <br>
                         Applied to African realities.
                     </h2>
@@ -826,6 +898,7 @@
 
                     <a
                         href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=technology_cta"
+                        data-outbound-cta="technology_cta"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn-pill inline-block px-8 py-3 text-sm font-bold tracking-wide uppercase text-center"
@@ -836,21 +909,21 @@
 
                 <div class="grid grid-cols-1 gap-5" data-aos="fade-left">
                     <article class="card-b2b p-6 border-l-4 border-l-[#ff751f]">
-                        <h3 class="text-2xl font-bold text-graphite mb-2 font-heading">AirBridge® Technology</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-2">AirBridge® Technology</h3>
                         <p class="text-gray-600 font-light text-sm leading-relaxed">
                             Advanced aerial transport technology for passenger and cargo movement across cities, terrain barriers and infrastructure gaps.
                         </p>
                     </article>
 
                     <article class="card-b2b p-6 border-l-4 border-l-[#ff751f]">
-                        <h3 class="text-2xl font-bold text-graphite mb-2 font-heading">CDC Lab</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-2">CDC Lab</h3>
                         <p class="text-gray-600 font-light text-sm leading-relaxed">
                             Continuous innovation, testing and adaptation for climate conditions, terrain challenges and operational realities.
                         </p>
                     </article>
 
                     <article class="card-b2b p-6 border-l-4 border-l-[#ff751f]">
-                        <h3 class="text-2xl font-bold text-graphite mb-2 font-heading">Project Structuring</h3>
+                        <h3 class="card-title text-2xl text-graphite mb-2">Project Structuring</h3>
                         <p class="text-gray-600 font-light text-sm leading-relaxed">
                             Support for feasibility, route logic, technical validation, financial modeling and PPP-ready project development.
                         </p>
@@ -867,7 +940,7 @@
                         PPP & Economic Value
                     </span>
 
-                    <h2 class="text-4xl md:text-5xl font-light text-graphite font-heading mb-5">
+                    <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-5">
                         Built for infrastructure conversations.
                     </h2>
 
@@ -884,7 +957,7 @@
                             </svg>
                         </div>
 
-                        <h3 class="text-xl font-bold text-graphite mb-3 font-heading">Lower CAPEX Potential</h3>
+                        <h3 class="card-title text-xl text-graphite mb-3">Lower CAPEX Potential</h3>
                         <p class="text-gray-600 text-sm font-light">
                             Reduced land acquisition, simplified construction and fewer heavy civil works.
                         </p>
@@ -897,7 +970,7 @@
                             </svg>
                         </div>
 
-                        <h3 class="text-xl font-bold text-graphite mb-3 font-heading">Faster Time to Impact</h3>
+                        <h3 class="card-title text-xl text-graphite mb-3">Faster Time to Impact</h3>
                         <p class="text-gray-600 text-sm font-light">
                             Earlier project activation compared with slow, capital-intensive infrastructure models.
                         </p>
@@ -910,7 +983,7 @@
                             </svg>
                         </div>
 
-                        <h3 class="text-xl font-bold text-graphite mb-3 font-heading">Revenue Generation</h3>
+                        <h3 class="card-title text-xl text-graphite mb-3">Revenue Generation</h3>
                         <p class="text-gray-600 text-sm font-light">
                             Passenger fares, tourism ticketing, commercial integration and concession structures.
                         </p>
@@ -923,7 +996,7 @@
                             </svg>
                         </div>
 
-                        <h3 class="text-xl font-bold text-graphite mb-3 font-heading">Scalable Capacity</h3>
+                        <h3 class="card-title text-xl text-graphite mb-3">Scalable Capacity</h3>
                         <p class="text-gray-600 text-sm font-light">
                             Modular infrastructure for phased growth and demand-based planning.
                         </p>
@@ -931,7 +1004,7 @@
                 </div>
 
                 <div class="text-center max-w-3xl mx-auto" data-aos="fade-up">
-                    <h3 class="text-3xl md:text-4xl font-light text-graphite font-heading mb-5">
+                    <h3 class="section-title text-3xl md:text-4xl font-light text-graphite mb-5">
                         More than transport — economic growth.
                     </h3>
 
@@ -945,34 +1018,36 @@
 
                     <a
                         href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=ppp_cta"
+                        data-outbound-cta="ppp_cta"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn-pill inline-block px-10 py-4 font-bold tracking-[0.1em] uppercase text-xs"
                     >
-                        Explore CDC Global Capabilities
+                        Explore PPP-Ready Infrastructure Models
                     </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer id="contact" class="bg-graphite pt-20 pb-10">
+    <footer id="contact" class="bg-graphite pt-16 pb-8">
         <div class="max-w-4xl mx-auto px-6 text-center" data-aos="zoom-in">
             <span class="text-[#ff751f] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
                 Next Step
             </span>
 
-            <h2 class="text-4xl md:text-5xl font-light text-white mb-5 font-heading">
-                Explore the global engineering behind CDC Africa.
+            <h2 class="section-title text-4xl md:text-5xl font-light text-white mb-5">
+                Ready to explore CDC’s global ropeway platform?
             </h2>
 
-            <p class="text-gray-400 mb-10 text-lg font-light max-w-2xl mx-auto leading-relaxed">
-                CDC Africa is your regional entry point. Continue to CDC Global to discover the technology, engineering platform and international capabilities behind advanced ropeway infrastructure.
+            <p class="text-gray-400 mb-9 text-lg font-light max-w-2xl mx-auto leading-relaxed">
+                Continue to CDC Global to review technology background, engineering capabilities, system applications and international project expertise.
             </p>
 
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12 w-full sm:w-auto">
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8 w-full sm:w-auto">
                 <a
                     href="https://cdc.company?utm_source=cdc_africa&utm_medium=landing&utm_campaign=africa_gateway&utm_content=footer_primary_cta"
+                    data-outbound-cta="footer_primary_cta"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn-pill w-full sm:w-auto px-10 py-4 font-bold tracking-[0.1em] uppercase text-xs text-center"
@@ -988,14 +1063,13 @@
                 </a>
             </div>
 
-            <div class="mb-12 text-gray-400 text-sm leading-relaxed">
-                <p class="mb-2">Kigali, Rwanda</p>
-                <p>
-                    <a href="mailto:info@cdc.africa" class="hover:text-white transition-colors">info@cdc.africa</a>
-                </p>
+            <div class="mb-8 text-gray-400 text-sm leading-relaxed">
+                <span>Kigali, Rwanda</span>
+                <span class="mx-2 text-white/20">•</span>
+                <a href="mailto:info@cdc.africa" class="hover:text-white transition-colors">info@cdc.africa</a>
             </div>
 
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="border-t border-white/10 pt-7 flex flex-col md:flex-row justify-between items-center gap-6">
                 <a href="#" class="flex items-center gap-4" aria-label="CDC Africa home">
                     <img
                         src="./Logo_CDC_new.png"
@@ -1022,11 +1096,17 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
+        const siteNav = document.getElementById('siteNav');
         const mobileMenuButton = document.getElementById('mobileMenuButton');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileStickyCta = document.getElementById('mobileStickyCta');
 
         let isMobileMenuOpen = false;
+
+        const updateNav = () => {
+            if (!siteNav) return;
+            siteNav.classList.toggle('is-compact', window.scrollY > 80);
+        };
 
         const updateStickyCta = () => {
             if (!mobileStickyCta) return;
@@ -1066,24 +1146,69 @@
             link.addEventListener('click', closeMobileMenu);
         });
 
-        window.addEventListener('scroll', updateStickyCta);
+        const sectionLinks = document.querySelectorAll('[data-section-link]');
+        const observedSections = [...sectionLinks]
+            .map(link => document.getElementById(link.dataset.sectionLink))
+            .filter(Boolean);
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+
+                sectionLinks.forEach((link) => {
+                    link.classList.toggle(
+                        'is-active',
+                        link.dataset.sectionLink === entry.target.id
+                    );
+                });
+            });
+        }, {
+            rootMargin: '-35% 0px -55% 0px',
+            threshold: 0
+        });
+
+        observedSections.forEach(section => sectionObserver.observe(section));
+
+        document.querySelectorAll('[data-outbound-cta]').forEach((link) => {
+            link.addEventListener('click', () => {
+                const ctaName = link.dataset.outboundCta;
+
+                if (window.gtag) {
+                    gtag('event', 'click_outbound_cta', {
+                        cta_name: ctaName,
+                        destination: 'cdc.company'
+                    });
+                }
+
+                console.log('Outbound CTA:', ctaName);
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            updateNav();
+            updateStickyCta();
+        });
 
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 1024) {
                 closeMobileMenu();
             }
 
+            updateNav();
             updateStickyCta();
         });
 
+        updateNav();
         updateStickyCta();
 
-        AOS.init({
-            once: true,
-            offset: 50,
-            easing: 'ease-out-quart',
-            duration: 850
-        });
+        if (window.AOS) {
+            AOS.init({
+                once: true,
+                offset: 50,
+                easing: 'ease-out-quart',
+                duration: 850
+            });
+        }
     </script>
 </body>
 </html>
