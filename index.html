@@ -400,7 +400,8 @@
             opacity: 0;
             transform: translateY(16px);
             pointer-events: none;
-            transition: opacity var(--t-fast), transform var(--t-fast);
+            transition: opacity 420ms cubic-bezier(0.4, 0, 0.2, 1), transform 420ms cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, transform;
         }
 
         .mobile-sticky-cta.is-visible {
@@ -458,16 +459,14 @@
             .mobile-sticky-cta {
                 display: block;
                 position: fixed;
-                left: 12px;
-                right: 12px;
-                bottom: calc(10px + env(safe-area-inset-bottom));
-                z-index: 999;
-            }
-
-            .mobile-sticky-cta a {
-                padding-top: 14px;
-                padding-bottom: 14px;
-                font-size: 10px;
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                z-index: 40;
+                border-radius: var(--radius-full);
+                padding: 0.875rem 1.25rem;
+                font-size: 0.875rem;
+                box-shadow: var(--shadow-btn);
             }
 
             .image-placeholder {
@@ -1269,15 +1268,39 @@
             siteNav.classList.toggle('is-compact', window.scrollY > 80);
         };
 
+        let stickyCtaObserver = null;
+
+        const initStickyCtaObserver = () => {
+            if (!mobileStickyCta || window.innerWidth > 640) return;
+
+            const hiddenSections = document.querySelectorAll('[data-hide-sticky-cta]');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0
+            };
+
+            const observerCallback = (entries) => {
+                let shouldHide = false;
+
+                entries.forEach(entry => {
+                    if (entry.target.hasAttribute('data-hide-sticky-cta') && entry.isIntersecting) {
+                        shouldHide = true;
+                    }
+                });
+
+                const isVisible = !shouldHide && !isMobileMenuOpen;
+                mobileStickyCta.classList.toggle('is-visible', isVisible);
+            };
+
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+            hiddenSections.forEach(section => observer.observe(section));
+
+            stickyCtaObserver = observer;
+        };
+
         const updateStickyCta = () => {
-            if (!mobileStickyCta) return;
-
-            const shouldShow =
-                window.innerWidth <= 640 &&
-                window.scrollY > window.innerHeight * 0.55 &&
-                !isMobileMenuOpen;
-
-            mobileStickyCta.classList.toggle('is-visible', shouldShow);
+            // No-op: IntersectionObserver handles visibility
         };
 
         const closeMobileMenu = () => {
@@ -1288,7 +1311,15 @@
             mobileMenuButton.textContent = 'Menu';
             isMobileMenuOpen = false;
 
-            updateStickyCta();
+            const hiddenSections = document.querySelectorAll('[data-hide-sticky-cta]');
+            let shouldHide = false;
+            hiddenSections.forEach(section => {
+                if (section.getBoundingClientRect().top < window.innerHeight &&
+                    section.getBoundingClientRect().bottom > 0) {
+                    shouldHide = true;
+                }
+            });
+            mobileStickyCta.classList.toggle('is-visible', !shouldHide);
         };
 
         mobileMenuButton.addEventListener('click', () => {
@@ -1300,7 +1331,7 @@
             mobileMenuButton.textContent = willOpen ? 'Close' : 'Menu';
 
             isMobileMenuOpen = willOpen;
-            updateStickyCta();
+            mobileStickyCta.classList.toggle('is-visible', !willOpen);
         });
 
         mobileMenu.querySelectorAll('a').forEach((link) => {
@@ -1362,7 +1393,6 @@
 
         window.addEventListener('scroll', () => {
             updateNav();
-            updateStickyCta();
             updateActiveNav();
         });
 
@@ -1372,13 +1402,19 @@
             }
 
             updateNav();
-            updateStickyCta();
             updateActiveNav();
+
+            if (window.innerWidth <= 640 && !stickyCtaObserver) {
+                initStickyCtaObserver();
+            }
         });
 
         updateNav();
-        updateStickyCta();
         updateActiveNav();
+
+        if (window.innerWidth <= 640) {
+            initStickyCtaObserver();
+        }
 
         if (window.AOS) {
             AOS.init({
