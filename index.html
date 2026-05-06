@@ -74,6 +74,18 @@
             --cdc-orange: #ff751f;
             --cdc-orange-dark: #e6681c;
             --cdc-white: #ffffff;
+
+            --radius-full: 999px;
+            --radius-card: 14px;
+            --radius-metric: 12px;
+
+            --t-fast: 0.25s ease;
+            --t-mid: 0.3s ease;
+
+            --shadow-btn: 0 12px 30px rgba(255, 117, 31, 0.22);
+            --shadow-btn-hover: 0 16px 40px rgba(255, 117, 31, 0.28);
+            --shadow-card: 0 18px 50px rgba(0, 0, 0, 0.065);
+            --shadow-nav: 0 10px 30px rgba(0, 0, 0, 0.14);
         }
 
         body {
@@ -101,7 +113,7 @@
         button:focus-visible {
             outline: 2px solid var(--cdc-orange);
             outline-offset: 4px;
-            border-radius: 999px;
+            border-radius: var(--radius-full);
         }
 
         .bg-graphite { background-color: var(--cdc-graphite); }
@@ -110,13 +122,13 @@
         .text-graphite { color: var(--cdc-graphite); }
 
         .site-nav {
-            transition: padding 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+            transition: padding var(--t-fast), background-color var(--t-fast), box-shadow var(--t-fast);
         }
 
         .site-nav.is-compact {
             padding-top: 0.65rem;
             padding-bottom: 0.65rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.14);
+            box-shadow: var(--shadow-nav);
         }
 
         .site-nav.is-compact .brand-logo {
@@ -128,25 +140,27 @@
         }
 
         .btn-pill {
-            border-radius: 999px;
+            border-radius: var(--radius-full);
             background-color: var(--cdc-orange);
             color: var(--cdc-white);
-            transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
-            box-shadow: 0 12px 30px rgba(255, 117, 31, 0.22);
+            transition: transform var(--t-fast), background-color var(--t-fast), box-shadow var(--t-fast);
+            box-shadow: var(--shadow-btn);
+            will-change: transform;
         }
 
         .btn-pill:hover {
             background-color: var(--cdc-orange-dark);
             transform: translateY(-2px);
-            box-shadow: 0 16px 40px rgba(255, 117, 31, 0.28);
+            box-shadow: var(--shadow-btn-hover);
         }
 
         .btn-pill-outline {
-            border-radius: 999px;
+            border-radius: var(--radius-full);
             border: 1px solid rgba(255,255,255,0.72);
             color: var(--cdc-white);
             background: transparent;
-            transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+            transition: transform var(--t-fast), background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+            will-change: transform;
         }
 
         .btn-pill-outline:hover {
@@ -157,17 +171,18 @@
         }
 
         .card-b2b {
-            border-radius: 14px;
+            border-radius: var(--radius-card);
             border: 1px solid #e5e7eb;
             background-color: #ffffff;
             overflow: hidden;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            transition: border-color var(--t-mid), box-shadow var(--t-mid), transform var(--t-mid);
+            will-change: transform;
         }
 
         .card-b2b:hover,
         .card-b2b:focus-within {
             border-color: rgba(255,117,31,0.58);
-            box-shadow: 0 18px 50px rgba(0,0,0,0.065);
+            box-shadow: var(--shadow-card);
             transform: translateY(-3px);
         }
 
@@ -247,7 +262,7 @@
             right: -46px;
             bottom: -62px;
             border: 1px solid rgba(255,117,31,0.45);
-            border-radius: 999px;
+            border-radius: var(--radius-full);
         }
 
         .placeholder-label {
@@ -294,7 +309,7 @@
             width: 0;
             height: 1px;
             background: var(--cdc-orange);
-            transition: width 0.25s ease;
+            transition: width var(--t-fast);
         }
 
         .nav-link:hover::after,
@@ -318,11 +333,37 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             font-size: 11px;
-            transition: color 0.25s ease;
+            transition: color var(--t-fast);
         }
 
         .text-link-arrow:hover {
             color: var(--cdc-orange-dark);
+        }
+
+        .section-label {
+            color: var(--cdc-orange);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .trust-label {
+            color: var(--cdc-white);
+            font-family: 'Goodly', Arial, Helvetica, sans-serif;
+            font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+            line-height: 1;
+        }
+
+        .trust-value {
+            color: var(--cdc-orange);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin-top: 0.25rem;
         }
 
         .skip-link {
@@ -333,7 +374,7 @@
             background: var(--cdc-orange);
             color: white;
             padding: 10px 16px;
-            border-radius: 999px;
+            border-radius: var(--radius-full);
         }
 
         .skip-link:focus {
@@ -345,7 +386,7 @@
             opacity: 0;
             transform: translateY(16px);
             pointer-events: none;
-            transition: opacity 0.25s ease, transform 0.25s ease;
+            transition: opacity var(--t-fast), transform var(--t-fast);
         }
 
         .mobile-sticky-cta.is-visible {
@@ -364,7 +405,7 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--cdc-orange);
-            border-radius: 999px;
+            border-radius: var(--radius-full);
         }
 
         @media (max-width: 640px) {
@@ -603,23 +644,23 @@
         <section class="bg-graphite border-y border-white/10">
             <div class="max-w-7xl mx-auto px-6 md:px-12 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 <div>
-                    <div class="text-white font-heading text-2xl md:text-3xl">Kigali-Based</div>
-                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Regional Hub</div>
+                    <div class="trust-label">Kigali-Based</div>
+                    <div class="trust-value">Regional Hub</div>
                 </div>
 
                 <div>
-                    <div class="text-white font-heading text-2xl md:text-3xl">Global CDC</div>
-                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Engineering Access</div>
+                    <div class="trust-label">Global CDC</div>
+                    <div class="trust-value">Engineering Access</div>
                 </div>
 
                 <div>
-                    <div class="text-white font-heading text-2xl md:text-3xl">PPP-Ready</div>
-                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Infrastructure Logic</div>
+                    <div class="trust-label">PPP-Ready</div>
+                    <div class="trust-value">Infrastructure Logic</div>
                 </div>
 
                 <div>
-                    <div class="text-white font-heading text-2xl md:text-3xl">4 Sectors</div>
-                    <div class="text-[#ff751f] text-[10px] font-bold uppercase tracking-[0.18em] mt-1">Urban • Tourism • Remote • Mining</div>
+                    <div class="trust-label">4 Sectors</div>
+                    <div class="trust-value">Urban • Tourism • Remote • Mining</div>
                 </div>
             </div>
         </section>
@@ -627,9 +668,7 @@
         <section id="about" class="py-14 md:py-20 bg-pure-white border-b border-gray-200">
             <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                 <div data-aos="fade-right">
-                    <span class="text-[#ff751f] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-                        CDC Africa
-                    </span>
+                    <span class="section-label">CDC Africa</span>
 
                     <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-6">
                         The African hub for CDC’s global ropeway engineering.
@@ -687,9 +726,7 @@
         <section id="why-africa" class="py-16 md:py-20 bg-stone border-b border-gray-200">
             <div class="max-w-7xl mx-auto px-6 md:px-12">
                 <div class="text-center max-w-3xl mx-auto mb-10 md:mb-12" data-aos="fade-up">
-                    <span class="text-[#ff751f] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-                        Why Africa
-                    </span>
+                    <span class="section-label">Why Africa</span>
 
                     <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-5">
                         Africa’s growth requires new infrastructure models.
@@ -734,9 +771,7 @@
 
         <section id="use-cases" class="py-16 md:py-20 bg-pure-white">
             <div class="max-w-7xl mx-auto px-6 md:px-12 mb-10 md:mb-12 text-center" data-aos="fade-up">
-                <span class="text-[#ff751f] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-                    Find Your African Use Case
-                </span>
+                <span class="section-label">Find Your African Use Case</span>
 
                 <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-5">
                     What are you planning?
@@ -863,9 +898,7 @@
             <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
                 <div class="text-center max-w-4xl mx-auto mb-10 md:mb-12" data-aos="fade-up">
-                    <span class="text-[#ff751f] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-                        Extractive Sector
-                    </span>
+                    <span class="section-label">Extractive Sector</span>
 
                     <h2 class="section-title text-4xl md:text-6xl font-light text-white mb-5">
                         Material Ropeways & Cable Cranes <br class="hidden md:block">
@@ -951,9 +984,7 @@
             <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
                 <div data-aos="fade-right">
-                    <span class="text-[#ff751f] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-                        Global Engineering Behind CDC Africa
-                    </span>
+                    <span class="section-label">Global Engineering Behind CDC Africa</span>
 
                     <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-5">
                         Proven technology. <br>
@@ -1004,9 +1035,7 @@
             <div class="max-w-7xl mx-auto px-6 md:px-12">
 
                 <div class="text-center max-w-3xl mx-auto mb-10 md:mb-12" data-aos="fade-up">
-                    <span class="text-[#ff751f] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-                        PPP & Economic Value
-                    </span>
+                    <span class="section-label">PPP & Economic Value</span>
 
                     <h2 class="section-title text-4xl md:text-5xl font-light text-graphite mb-5">
                         Built for infrastructure conversations.
@@ -1100,9 +1129,7 @@
 
     <footer id="contact" class="bg-graphite pt-16 pb-8">
         <div class="max-w-4xl mx-auto px-6 text-center" data-aos="zoom-in">
-            <span class="text-[#ff751f] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-                Next Step
-            </span>
+            <span class="section-label">Next Step</span>
 
             <h2 class="section-title text-4xl md:text-5xl font-light text-white mb-5">
                 Ready to explore CDC’s global ropeway platform?
