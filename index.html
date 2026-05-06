@@ -99,10 +99,24 @@
 
         h1,
         h2,
+        h3,
         .font-heading,
         .section-title,
         .display-heading {
             font-family: 'Goodly', Arial, Helvetica, sans-serif;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 8vw, 3rem);
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 5vw, 1.75rem);
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 10.5vw, 3.25rem);
+            line-height: 1.15;
         }
 
         section {
@@ -428,6 +442,17 @@
 
             body {
                 padding-bottom: calc(72px + env(safe-area-inset-bottom));
+                font-size: 1.0625rem;
+                line-height: 1.65;
+            }
+
+            p {
+                font-size: 1.0625rem;
+                line-height: 1.65;
+            }
+
+            .card-b2b {
+                font-size: 0.96875rem;
             }
 
             .mobile-sticky-cta {
@@ -447,6 +472,14 @@
 
             .image-placeholder {
                 height: 9rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            h3 {
+                font-size: 1.1875rem;
             }
         }
 
