@@ -506,7 +506,8 @@
         }
 
         @media (max-width: 380px) {
-            .site-nav {
+            .site-nav,
+            .site-nav.is-compact {
                 padding: 0.75rem 1rem;
             }
 
@@ -514,11 +515,13 @@
                 gap: 0.5rem;
             }
 
-            .brand-logo {
+            .brand-logo,
+            .site-nav.is-compact .brand-logo {
                 height: 28px;
             }
 
-            .logo-text-nav {
+            .logo-text-nav,
+            .site-nav.is-compact .logo-text-nav {
                 font-size: 20px;
             }
 
